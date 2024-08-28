@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- *******************************************************************************
+    * COPYRIGHT Ericsson LMI 2019. All rights reserved. * * No part of this document
+    may be reproduced in any form without the * written permission of the copyright
+    owner.The contents of this document * are subject to revision without notice
+    due to continued progress in * methodology, design and manufacturing. Ericsson
+    shall have no liability * for any error or damage of any kind resulting from
+    the use of this document.
+    ******************************************************************************** -->
+<oss_capability:CapabilityDefinition
+        oss_common:name="AP" oss_common:ns="global" oss_common:lifeCycle="CURRENT" oss_common:lifeCycleDesc="CURRENT"
+        xmlns:oss_capability="urn:com:ericsson:schema:xml:oss:oss_capability"
+        xmlns:oss_common="urn:com:ericsson:schema:xml:oss:oss_common">
+
+    <oss_common:modelCreationInfo author="ericsson" creationDate="2019-03-07 16:10:00.00">
+        <oss_common:designedModel componentId="ap-data-model-core"/>
+    </oss_common:modelCreationInfo>
+    <oss_common:desc>AP Node capability</oss_common:desc>
+
+    <oss_capability:capability name="apMappedNamespace" type="STRING">
+        <oss_capability:desc>Capability definition for the namespace that the AP node belongs to</oss_capability:desc>
+    </oss_capability:capability>
+
+</oss_capability:CapabilityDefinition>

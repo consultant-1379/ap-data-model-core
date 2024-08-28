@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.ericsson.oss.autoprovisioning.core</groupId>
+        <artifactId>ap-data-model-core</artifactId>
+        <version>1.129.42-SNAPSHOT</version>
+    </parent>
+
+    <groupId>com.ericsson.oss.services.autoprovisioning</groupId>
+    <artifactId>ap-data-model-core-jar</artifactId>
+    <name>[${project.parent.artifactId}] JAR module</name>
+
+    <dependencies>
+        <!-- ENM Dependencies -->
+        <dependency>
+            <groupId>com.ericsson.nms.mediation</groupId>
+            <artifactId>core-mediation-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ericsson.oss.itpf.modeling</groupId>
+            <artifactId>modeling-annotation-jar</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.ericsson.oss.services.model.ned</groupId>
+            <artifactId>network-element-definition-model-jar</artifactId>
+            <version>${version.network-element-definition-model-jar}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>../ap-data-model-core-model/model-build</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <!-- This invokes the Annotation Processor. It runs against all the compiled classes part of this jar module. -->
+            <plugin>
+                <groupId>com.ericsson.oss.itpf.modeling.tools</groupId>
+                <artifactId>modeling-annotation-processor-jar</artifactId>
+                <version>${version.annotation-processor}</version>
+                <executions>
+                    <execution>
+                        <phase>process-classes</phase>
+                        <goals>
+                            <goal>annoproc</goal>
+                        </goals>
+                        <configuration>
+                            <modelBuildDir>../ap-data-model-core-model/model-build</modelBuildDir>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.ericsson.oss.services.model.ned</groupId>
+                        <artifactId>network-element-definition-model-jar</artifactId>
+                        <version>${version.network-element-definition-model-jar}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>com.ericsson.nms.mediation</groupId>
+                        <artifactId>core-mediation-api</artifactId>
+                        <version>${version.mediation.engine.api}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <!-- Generate sources jar but exclude the cache for now as this is a hack workaround having the cache in here in the first place. It is removed 
+                primarily because this sources module is unpacked in macro and as the same cache file with same pkg name exists there it causes comilation errors due to 
+                duplicate classes issue -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                 <artifactId>maven-javadoc-plugin</artifactId>
+                 <version>3.0.1</version>
+                 <configuration>
+                     <doclint>none</doclint>
+                     <failOnError>false</failOnError>
+                 </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
